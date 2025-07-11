@@ -1,0 +1,568 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-image: linear-gradient(to bottom right, rgb(239, 68, 68), rgb(59, 130, 246));
+    min-height: 100vh;
+    color: white;
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+  }
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  h1 {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 800; /* font-extrabold */
+    margin-bottom: 1rem; /* mb-4 */
+    color: white; /* text-white */
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06)); /* drop-shadow-lg */
+  }
+  h2 {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 600; /* font-semibold */
+    margin-bottom: 0.75rem; /* mb-3 */
+  }
+}
+
+@layer components {
+  .container {
+    max-width: 80rem; /* max-w-7xl */
+    margin-left: auto; /* mx-auto */
+    margin-right: auto; /* mx-auto */
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+    padding-top: 2rem; /* py-8 */
+    padding-bottom: 2rem; /* py-8 */
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem; /* sm:px-6 */
+      padding-right: 1.5rem; /* sm:px-6 */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem; /* lg:px-8 */
+      padding-right: 2rem; /* lg:px-8 */
+    }
+  }
+  
+  /* Style pour l'arrière-plan avec Poké Ball en cover */
+  .pokeball-bg {
+    position: relative;
+    background: linear-gradient(135deg, #ff5b5b 0%, #d33e3e 50%, #3b76e3 50%, #5e96ff 100%);
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='pokeball' patternUnits='userSpaceOnUse' width='500' height='500' patternTransform='scale(0.5) rotate(0)'%3E%3Ccircle cx='250' cy='250' r='200' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='40'/%3E%3Cline x1='50' y1='250' x2='450' y2='250' stroke='rgba(255,255,255,0.05)' stroke-width='40'/%3E%3Ccircle cx='250' cy='250' r='50' fill='rgba(255,255,255,0.05)' stroke='rgba(255,255,255,0.05)' stroke-width='40'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23pokeball)'/%3E%3C/svg%3E");
+    background-size: 120% 120%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    animation: parallaxBg 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes parallaxBg {
+    0% {
+      background-position: 0% 0%;
+    }
+    25% {
+      background-position: 100% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    75% {
+      background-position: 0% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+  
+  /* Style pour les cartes Pokémon en cercle */
+  .pokemon-card {
+    background-color: rgba(255, 255, 255, 0.2); /* bg-white bg-opacity-20 */
+    backdrop-filter: blur(16px); /* backdrop-blur-lg */
+    transition-property: all; /* transition-all */
+    transition-duration: 300ms; /* duration-300 */
+    overflow: hidden;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    animation: floatAnimation 6s ease-in-out infinite;
+    animation-delay: calc(var(--animation-order, 0) * 0.1s);
+  }
+  
+  .pokemon-card:hover {
+    transform: scale(1.05) translateY(-5px) rotate(5deg);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    animation-play-state: paused;
+  }
+  
+  .pokemon-card:active {
+    transform: scale(0.95);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  @keyframes floatAnimation {
+    0% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(3deg);
+    }
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+  }
+  
+  /* Style pour l'intérieur des cartes Pokémon */
+  .pokemon-card-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='100' cy='100' r='98' fill='none' stroke='rgba(255,255,255,0.2)' stroke-width='2'/%3E%3Cpath d='M100,2 a98,98 0 0,1 0,196 a98,98 0 0,1 0,-196 M2,100 h196' stroke='rgba(255,255,255,0.2)' stroke-width='2' fill='none'/%3E%3Ccircle cx='100' cy='100' r='20' fill='rgba(255,255,255,0.2)'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    padding: 10px;
+  }
+  
+  /* Style pour les images de Pokémon dans les cercles */
+  .pokemon-image-container {
+    position: relative;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem; /* w-24 */
+    height: 6rem; /* h-24 */
+    margin-left: auto; /* mx-auto */
+    margin-right: auto; /* mx-auto */
+    margin-bottom: 0.5rem; /* mb-2 */
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    animation: pulse 3s infinite;
+    overflow: hidden;
+  }
+  
+  .pokemon-image-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+    animation: rotate 6s linear infinite;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+      transform: scale(1.05);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+      transform: scale(1);
+    }
+  }
+  
+  /* Style pour la barre de recherche */
+  .search-input {
+    width: 100%;
+    padding-top: 0.5rem; /* py-2 */
+    padding-bottom: 0.5rem; /* py-2 */
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+    border-radius: 9999px; /* rounded-full */
+    background-color: rgba(255, 255, 255, 0.2); /* bg-white bg-opacity-20 */
+    backdrop-filter: blur(16px); /* backdrop-blur-lg */
+    color: white; /* text-white */
+    border: 2px solid rgba(255, 255, 255, 0.3); /* border-2 border-white border-opacity-30 */
+    transition-property: all; /* transition-all */
+    transition-duration: 300ms; /* duration-300 */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+  
+  .search-input:focus {
+    outline: none; /* focus:outline-none */
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.7),
+                0 0 15px rgba(239, 68, 68, 0.5),
+                0 0 30px rgba(239, 68, 68, 0.3),
+                0 5px 20px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+  
+  .search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Style pour les badges de type */
+  .type-badge {
+    padding-left: 0.75rem; /* px-3 */
+    padding-right: 0.75rem; /* px-3 */
+    padding-top: 0.25rem; /* py-1 */
+    padding-bottom: 0.25rem; /* py-1 */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 600; /* font-semibold */
+    text-transform: uppercase; /* uppercase */
+    letter-spacing: 0.05em; /* tracking-wider */
+    border-radius: 9999px;
+  }
+  
+  /* Style pour les boutons */
+  .btn {
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+    padding-top: 0.5rem; /* py-2 */
+    padding-bottom: 0.5rem; /* py-2 */
+    font-weight: 500; /* font-medium */
+    transition-property: all; /* transition-all */
+    transition-duration: 300ms; /* duration-300 */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+    border-radius: 9999px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: -1;
+    border-radius: 9999px 9999px 0 0;
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Style pour les boutons primaires */
+  .btn-primary {
+    @apply bg-red-500 hover:bg-red-600 text-white;
+    box-shadow: 0 4px 0 #b91c1c;
+  }
+  
+  .btn-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #b91c1c;
+  }
+  
+  /* Style pour les boutons secondaires */
+  .btn-secondary {
+    @apply bg-blue-500 hover:bg-blue-600 text-white;
+    box-shadow: 0 4px 0 #1e40af;
+  }
+  
+  .btn-secondary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #1e40af;
+  }
+  
+  /* Style pour les statistiques */
+  .pokemon-stats {
+    @apply mt-4 space-y-2;
+  }
+  
+  /* Style pour les barres de statistiques */
+  .stat-bar {
+    @apply h-2.5 rounded-full bg-gray-200 overflow-hidden;
+  }
+  
+  /* Style pour les lignes de statistiques */
+  .stat-row {
+    @apply mb-3;
+  }
+  
+  /* Style pour les éléments d'information sur l'espèce */
+  .info-item {
+    @apply mb-2 p-2 rounded-md transition-all duration-300 hover:bg-gray-50 hover:shadow-sm;
+  }
+  
+  /* Styles pour la section d'évolution */
+  .evolution-chain {
+    @apply flex flex-col md:flex-row items-center;
+  }
+
+  .evolution-item {
+    @apply flex flex-col items-center;
+  }
+
+  .evolution-link {
+    @apply flex flex-col items-center transition-transform hover:scale-110;
+  }
+
+  .evolution-image-container {
+    @apply bg-gray-100 rounded-full p-2 shadow-md border-2 border-gray-200;
+  }
+
+  .evolution-image {
+    @apply object-contain;
+  }
+
+  .evolution-name {
+    @apply text-center mt-1 text-sm font-medium capitalize;
+  }
+
+  .evolution-next {
+    @apply flex flex-col md:flex-row items-center;
+  }
+
+  .evolution-arrow {
+    color: #9ca3af; /* text-gray-400 */
+    margin-left: 0.5rem; /* mx-2 */
+    margin-right: 0.5rem; /* mx-2 */
+    margin-top: 0.5rem; /* my-2 */
+    margin-bottom: 0.5rem; /* my-2 */
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; /* animate-pulse */
+  }
+  
+  @media (min-width: 768px) {
+    .evolution-arrow {
+      margin-top: 0; /* md:my-0 */
+      margin-bottom: 0; /* md:my-0 */
+    }
+  }
+
+  .evolution-branches {
+    display: flex; /* flex */
+    flex-wrap: wrap; /* flex-wrap */
+    justify-content: center; /* justify-center */
+    gap: 1rem; /* gap-4 */
+  }
+
+  /* Styles pour les badges de type */
+  /* Note: Cette classe est déjà définie plus bas dans le fichier avec les styles corrects */
+  /* Suppression de la duplication pour éviter les conflits */
+
+  .type-badge:nth-child(1) { animation-delay: 0.3s; }
+  .type-badge:nth-child(2) { animation-delay: 0.4s; }
+  
+  /* Styles pour les barres de statistiques */
+  .stat-row {
+    transition-property: all; /* transition-all */
+    transition-duration: 300ms; /* duration-300 */
+    animation: fadeIn 0.5s ease-in-out forwards;
+    opacity: 0;
+  }
+  
+  .stat-bar-fill {
+    animation: growWidth 1.2s ease-out forwards;
+    transform-origin: left;
+  }
+  
+  @keyframes growWidth {
+    from { width: 0; }
+    to { /* La largeur finale est définie en ligne */ }
+  }
+  
+  /* Styles pour la chaîne d'évolution */
+  .evolution-chain {
+    /* Utilisation des classes directement au lieu de @apply pour éviter les erreurs de lint */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .evolution-name {
+    color: #1f2937; /* text-gray-800 */
+    font-weight: 500; /* font-medium */
+    margin-top: 0.5rem;
+    font-size: 0.875rem; /* text-sm */
+    text-align: center;
+  }
+  
+  .evolution-chain::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .evolution-chain::-webkit-scrollbar-thumb {
+    background-color: rgb(147, 197, 253); /* blue-300 */
+    border-radius: 9999px;
+  }
+  
+  .evolution-chain::-webkit-scrollbar-track {
+    background-color: rgb(243, 244, 246); /* gray-100 */
+    border-radius: 9999px;
+  }
+
+  /* Styles pour les sprites */
+  .sprite-card {
+    @apply transition-all duration-300;
+    animation: fadeIn 0.5s ease-in-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+  
+  .animate-scaleIn {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  .sprite-card:nth-child(1) { animation-delay: 0.1s; }
+  .sprite-card:nth-child(2) { animation-delay: 0.2s; }
+  .sprite-card:nth-child(3) { animation-delay: 0.3s; }
+  .sprite-card:nth-child(4) { animation-delay: 0.4s; }
+
+  /* Styles pour les informations sur l'espèce */
+  .species-info-section {
+    @apply bg-gray-50 rounded-lg p-4 mb-4;
+  }
+  
+  /* Styles pour les badges de type */
+  .type-badge {
+    padding-left: 0.75rem; /* px-3 */
+    padding-right: 0.75rem; /* px-3 */
+    padding-top: 0.25rem; /* py-1 */
+    padding-bottom: 0.25rem; /* py-1 */
+    border-radius: 9999px; /* rounded-full */
+    color: white; /* text-white */
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500; /* font-medium */
+    text-transform: uppercase; /* uppercase */
+    letter-spacing: 0.05em; /* tracking-wider */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+    animation: badgePulse 3s infinite;
+  }
+  
+  @keyframes badgePulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+    70% { box-shadow: 0 0 0 5px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+
+  .species-info-title {
+    @apply text-lg font-semibold mb-3 text-gray-700;
+  }
+
+  .species-info-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-3;
+  }
+
+  .species-info-item {
+    @apply flex flex-col;
+  }
+
+  .species-info-label {
+    @apply text-sm text-gray-500 font-medium;
+  }
+
+  .species-info-value {
+    @apply text-gray-800 font-medium capitalize;
+  }
+
+  .species-info-badge {
+    @apply inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-1 mb-1;
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
+               0 0 20px rgba(255, 0, 0, 0.5),
+               0 0 30px rgba(255, 0, 0, 0.3);
+  }
+  
+  .pokemon-name {
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .pokemon-card:hover .pokemon-name {
+    transform: scale(1.1);
+    text-shadow: 0 0 5px #fff, 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+  
+  .evolution-item {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .evolution-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .evolution-arrow {
+    animation: pulseArrow 2s infinite ease-in-out;
+  }
+  
+  @keyframes pulseArrow {
+    0% { opacity: 0.5; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(3px); }
+    100% { opacity: 0.5; transform: translateY(0); }
+  }
+  .pokemon-stats {
+    @apply mt-4 space-y-2;
+  }
+  
+  /* Style pour l'arrière-plan Poké Ball */
+  .pokeball-bg {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%23000' stroke-width='5'/%3E%3Ccircle cx='50' cy='50' r='20' fill='%23000'/%3E%3Crect x='0' y='45' width='100' height='10' fill='%23000'/%3E%3C/svg%3E");
+  }
+  .stat-bar {
+    @apply h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500;
+  }
+  .search-input {
+    @apply w-full p-4 rounded-full border-2 border-white/50 bg-white/80 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent shadow-lg text-lg;
+  }
+  .type-badge {
+    @apply px-3 py-1 rounded-full text-white font-medium text-sm uppercase tracking-wider shadow-md;
+  }
+}
